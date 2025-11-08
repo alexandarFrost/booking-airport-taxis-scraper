@@ -1,0 +1,150 @@
+It looks like you're trying to run Python code, but you need to log in to ChatGPT to use the Python functionality. However, you can still use the code below on your local machine or any Python environment:
+Code to create files based on the directory structure:
+pythonimport os
+
+files = [
+ {
+ "path": "booking-airport-taxis-scraper/src/runner.py",
+ "language": "python",
+ "content": '''import json
+from extractors.taxi_service_parser import TaxiServiceParser
+from extractors.location_parser import LocationParser
+from outputs.exporters import Exporter
+
+def main():
+ # Example of using TaxiServiceParser to scrape and print data
+ location = LocationParser('Faro Airport (FAO), 8006-901 Faro, Portugal')
+ taxi_data = TaxiServiceParser(location)
+ taxi_info = taxi_data.extract_data()
+
+ # Export data to JSON (you can choose other formats)
+ exporter = Exporter('json')
+ exporter.export(taxi_info)
+
+if __name__ == "__main__":
+ main()'''
+ },
+ {
+ "path": "booking-airport-taxis-scraper/src/extractors/taxi_service_parser.py",
+ "language": "python",
+ "content": '''import requests
+
+class TaxiServiceParser:
+ def __init__(self, location):
+ self.location = location
+
+ def extract_data(self):
+ # Simulating a scraped taxi service info
+ taxi_info = {
+ "pickupLocation": self.location.get_info(),
+ "taxiInfo": {
+ "predictedPickupDateTime": "2024-03-29 07:30:00",
+ "bags": 6,
+ "meetAndGreet": True,
+ "price": 28.48,
+ "currency": "EUR",
+ "carDetails": {
+ "model": "Ford Tourneo",
+ "description": "Large People Carrier"
+ },
+ "link": "https://taxi.booking.com/bookingDetails/16b15fbd-d36b-4f17-acb6-6c960caf9225/6"
+ }
+ }
+ return taxi_info'''
+ },
+ {
+ "path": "booking-airport-taxis-scraper/src/extractors/location_parser.py",
+ "language": "python",
+ "content": '''class LocationParser:
+ def __init__(self, location):
+ self.location = location
+
+ def get_info(self):
+ # Return mock location data (in reality, this would be extracted from a web page or API)
+ return {
+ "name": self.location,
+ "city": "Faro",
+ "country": "PT"
+ }'''
+ },
+ {
+ "path": "booking-airport-taxis-scraper/src/outputs/exporters.py",
+ "language": "python",
+ "content": '''import json
+
+class Exporter:
+ def __init__(self, format_type):
+ self.format_type = format_type
+
+ def export(self, data):
+ if self.format_type == 'json':
+ with open('output.json', 'w') as outfile:
+ json.dump(data, outfile, indent=4)
+ # Further export formats (csv, xml, etc.) can be implemented here.'''
+ },
+ {
+ "path": "booking-airport-taxis-scraper/src/config/settings.example.json",
+ "language": "json",
+ "content": '''{
+ "apiBaseUrl": "https://api.booking.com",
+ "scrapingFrequency": "daily",
+ "outputFormats": ["json", "csv", "xml"]
+}'''
+ },
+ {
+ "path": "booking-airport-taxis-scraper/data/inputs.sample.txt",
+ "language": "text",
+ "content": '''# Sample input file for taxi scraper
+# Input your source data or API parameters here'''
+ },
+ {
+ "path": "booking-airport-taxis-scraper/data/sample.json",
+ "language": "json",
+ "content": '''{
+ "pickupLocation": {
+ "name": "Faro Airport (FAO), 8006-901 Faro, Portugal",
+ "city": "Faro",
+ "country": "PT"
+ },
+ "taxiInfo": {
+ "predictedPickupDateTime": "2024-03-29 07:30:00",
+ "bags": 6,
+ "meetAndGreet": true,
+ "price": 28.48,
+ "currency": "EUR",
+ "carDetails": {
+ "model": "Ford Tourneo",
+ "description": "Large People Carrier"
+ },
+ "link": "https://taxi.booking.com/bookingDetails/16b15fbd-d36b-4f17-acb6-6c960caf9225/6"
+ }
+}'''
+ },
+ {
+ "path": "booking-airport-taxis-scraper/requirements.txt",
+ "language": "text",
+ "content": '''requests
+''' 
+ }
+]
+
+# Create the directory structure and files
+for file in files:
+ # Create necessary directories if they don't exist
+ os.makedirs(os.path.dirname(file["path"]), exist_ok=True)
+
+ # Write the content to the respective file
+ with open(file["path"], 'w') as f:
+ f.write(file["content"])
+
+print("Files have been created successfully.")
+
+Steps to Run:
+
+Copy this code into a Python file, for example create_files.py.
+
+Run it in your Python environment (Python 3.x).
+
+The code will create the necessary directory structure and files based on the information provided.
+
+Let me know if you need help with anything else!
